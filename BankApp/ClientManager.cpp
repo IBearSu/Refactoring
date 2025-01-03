@@ -1,44 +1,44 @@
 #include "ClientManager.h"
 #include <iostream>
 
-// Конструктор
+// Constructor
 ClientManager::ClientManager(int next_client_ID)
     : next_client_ID_(next_client_ID) {
     std::cout << "ClientManager initialized with next client ID: " << next_client_ID_ << "\n";
 }
 
-// Деструктор для освобождения памяти клиентов
+// Destructor to free memory allocated for clients
 ClientManager::~ClientManager() {
     for (Client* client : clients_list_) {
-        delete client;  // Удаляем клиентов из динамической памяти
+        delete client;  // Delete clients from dynamic memory
     }
-    clients_list_.clear();  // Очищаем список клиентов
+    clients_list_.clear();  // Clear the client list
 }
 
-// Возвращаем ссылку на список клиентов
+// Return a reference to the client list
 std::list<Client*>& ClientManager::get_clients_list() {
-    return clients_list_;  // Возвращаем ссылку на оригинальный список
+    return clients_list_;  // Return a reference to the original list
 }
 
-// Возвращаем следующий доступный ID клиента
+// Return the next available client ID
 int ClientManager::get_next_client_ID() const {
     return next_client_ID_;
 }
 
-// Добавляем нового клиента
+// Add a new client
 void ClientManager::add_client(const std::string name, AccountManager* account_manager) {
-    Client* new_client = new Client(next_client_ID_, name, account_manager);  // Создаем клиента в динамической памяти
-    clients_list_.push_back(new_client);  // Добавляем клиента в список
+    Client* new_client = new Client(next_client_ID_, name, account_manager);  // Create a client in dynamic memory
+    clients_list_.push_back(new_client);  // Add the client to the list
     std::cout << "Client added: " << name << " with ID: " << next_client_ID_ << std::endl;
-    ++next_client_ID_;  // Увеличиваем следующий доступный ID
+    ++next_client_ID_;  // Increment the next available ID
 }
 
-// Удаляем клиента по ID
+// Delete a client by ID
 void ClientManager::delete_client(int client_ID) {
     for (auto it = clients_list_.begin(); it != clients_list_.end(); ++it) {
         if ((*it)->get_client_ID() == client_ID) {
-            delete* it;  // Удаляем клиента из памяти
-            clients_list_.erase(it);  // Удаляем указатель из списка
+            delete* it;  // Delete the client from memory
+            clients_list_.erase(it);  // Remove the pointer from the list
             std::cout << "Client with ID: " << client_ID << " deleted.\n";
             return;
         }
@@ -46,17 +46,17 @@ void ClientManager::delete_client(int client_ID) {
     std::cout << "Client with ID: " << client_ID << " not found.\n";
 }
 
-// Находим клиента по его ID
+// Find a client by ID
 Client* ClientManager::find_client_by_ID(int client_ID) const {
     for (Client* client : clients_list_) {
         if (client->get_client_ID() == client_ID) {
-            return client;  // Возвращаем указатель на найденного клиента
+            return client;  // Return a pointer to the found client
         }
     }
     return nullptr;
 }
 
-// Показываем информацию о клиенте
+// Show client information
 void ClientManager::show_client_info(int client_ID) const {
     Client* client = find_client_by_ID(client_ID);
     if (client) {
@@ -82,7 +82,7 @@ void ClientManager::show_client_info(int client_ID) const {
     }
 }
 
-// Показать всех клиентов
+// Show all clients
 void ClientManager::show_all_clients() const {
     if (clients_list_.empty()) {
         std::cout << "No clients to display.\n";

@@ -3,28 +3,28 @@
 #include <iostream>
 #include <string>
 
-// Предварительное объявление для TransactionManager
+// Forward declaration for TransactionManager
 class TransactionManager;
 
 class Transaction {
 private:
-    int transaction_ID_;               // Уникальный идентификатор транзакции
-    int sender_account_ID_;            // ID аккаунта отправителя
-    int receiver_account_ID_;          // ID аккаунта получателя
-    double amount_;                    // Сумма транзакции
-    TransactionManager* transaction_manager_;  // Указатель на менеджера транзакций
+    int transaction_ID_;               // Unique transaction identifier
+    int sender_account_ID_;            // Sender's account ID
+    int receiver_account_ID_;          // Receiver's account ID
+    double amount_;                    // Transaction amount
+    TransactionManager* transaction_manager_;  // Pointer to the transaction manager
 
 public:
-    // Конструктор
+    // Constructor
     Transaction(int transaction_ID, int sender_account_ID, int receiver_account_ID, double amount, TransactionManager* manager);
 
-    // Методы для получения данных
+    // Getter methods
     int get_transaction_ID() const;
     int get_sender_account_ID() const;
     int get_receiver_account_ID() const;
     double get_amount() const;
 
-    // геттер для transaction_manager_
+    // Getter for transaction_manager_
     TransactionManager* get_transaction_manager() const;
 };
 

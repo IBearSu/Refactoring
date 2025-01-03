@@ -1,7 +1,7 @@
 #include "Bank.h"
 #include <iostream>
 
-// default constructor for composition
+// Default constructor for composition
 Bank::Bank()
     : client_manager_(1),
     transaction_manager_(1, &account_manager_),
@@ -10,13 +10,13 @@ Bank::Bank()
 }
 
 ClientManager* Bank::get_client_manager() {
-    return &client_manager_; // dereference to get pointer
+    return &client_manager_; // Return a pointer to the client manager
 }
 
 TransactionManager* Bank::get_transaction_manager() {
-    return &transaction_manager_;
+    return &transaction_manager_; // Return a pointer to the transaction manager
 }
 
 AccountManager* Bank::get_account_manager() {
-    return &account_manager_;
+    return &account_manager_; // Return a pointer to the account manager
 }

@@ -3,42 +3,42 @@
 #include "AccountManager.h"
 #include <iostream>
 
-// Конструктор
+// Constructor
 TransactionManager::TransactionManager(int next_transaction_ID, AccountManager* manager)
     : next_transaction_ID_(next_transaction_ID), account_manager_(manager) {
     std::cout << "TransactionManager initialized with next transaction ID: " << next_transaction_ID_ << "\n";
 }
 
-// Деструктор для освобождения памяти
+// Destructor to free allocated memory
 TransactionManager::~TransactionManager() {
     for (Transaction* transaction : transactions_list_) {
-        delete transaction;  // Освобождаем память, выделенную под транзакции
+        delete transaction;  // Free memory allocated for transactions
     }
-    transactions_list_.clear();  // Очищаем список транзакций
+    transactions_list_.clear();  // Clear the transaction list
 }
 
-// Возвращаем ссылку на список транзакций
+// Return a reference to the transaction list
 std::list<Transaction*>& TransactionManager::get_transactions_list() {
-    return transactions_list_;  // Возвращаем ссылку на оригинальный список
+    return transactions_list_;  // Return a reference to the original list
 }
 
-// Получаем следующий доступный ID транзакции
+// Get the next available transaction ID
 int TransactionManager::get_next_transaction_ID() const {
     return next_transaction_ID_;
 }
 
-// Выполнение транзакции
+// Execute a transaction
 void TransactionManager::execute_transaction(int sender_account_ID, int receiver_account_ID, double amount) {
-    // Находим аккаунты отправителя и получателя по их ID
+    // Find sender and receiver accounts by their IDs
     Account* sender_account = account_manager_->find_account_by_ID(sender_account_ID);
     Account* receiver_account = account_manager_->find_account_by_ID(receiver_account_ID);
 
     if (sender_account && receiver_account) {
-        // Создаем новую транзакцию и добавляем ее в список
+        // Create a new transaction and add it to the list
         Transaction* new_transaction = new Transaction(next_transaction_ID_, sender_account_ID, receiver_account_ID, amount, this);
         transactions_list_.push_back(new_transaction);
 
-        // Проверяем баланс и выполняем транзакцию
+        // Check balance and execute transaction
         double sender_account_balance = sender_account->get_account_balance();
         if (sender_account_balance >= amount || sender_account == receiver_account) {
             account_manager_->withdraw(sender_account_ID, amount);
@@ -49,7 +49,7 @@ void TransactionManager::execute_transaction(int sender_account_ID, int receiver
             std::cout << "Insufficient funds in account " << sender_account_ID << ". Transaction failed.\n";
         }
 
-        // Увеличиваем ID для следующей транзакции
+        // Increment ID for the next transaction
         ++next_transaction_ID_;
     }
     else {
@@ -57,17 +57,17 @@ void TransactionManager::execute_transaction(int sender_account_ID, int receiver
     }
 }
 
-// Найти транзакцию по ее ID
+// Find a transaction by its ID
 Transaction* TransactionManager::find_transaction_by_ID(int transaction_ID) const {
     for (Transaction* transaction : transactions_list_) {
         if (transaction->get_transaction_ID() == transaction_ID) {
-            return transaction;  // Возвращаем указатель на найденную транзакцию
+            return transaction;  // Return a pointer to the found transaction
         }
     }
-    return nullptr;  // Транзакция не найдена
+    return nullptr;  // Transaction not found
 }
 
-// Показать информацию о транзакции
+// Show information about a specific transaction
 void TransactionManager::show_transaction_info(int transaction_ID) const {
     Transaction* transaction = find_transaction_by_ID(transaction_ID);
     if (transaction) {
@@ -83,7 +83,7 @@ void TransactionManager::show_transaction_info(int transaction_ID) const {
     }
 }
 
-// Показать все транзакции
+// Show all transactions
 void TransactionManager::show_all_transactions() const {
     if (transactions_list_.empty()) {
         std::cout << "No transactions to display.\n";
@@ -92,6 +92,6 @@ void TransactionManager::show_all_transactions() const {
 
     std::cout << "List of all transactions:\n";
     for (const Transaction* transaction : transactions_list_) {
-        show_transaction_info(transaction->get_transaction_ID());  // Выводим информацию о транзакции
+        show_transaction_info(transaction->get_transaction_ID());  // Display transaction details
     }
 }

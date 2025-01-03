@@ -23,7 +23,7 @@ void show_menu() {
 }
 
 void run_bank_app() {
-    Bank bank;  // Создаем объект класса Bank для взаимодействия с системой
+    Bank bank;  // Create a Bank object to interact with the system
     int choice;
 
     do {
@@ -32,7 +32,7 @@ void run_bank_app() {
 
         switch (choice) {
         case 1: {
-            // Регистрация нового клиента через ClientManager
+            // Register a new client via ClientManager
             std::string client_name;
             std::cout << "Enter client's name: ";
             std::cin >> client_name;
@@ -40,7 +40,7 @@ void run_bank_app() {
             break;
         }
         case 2: {
-            // Удаление клиента через ClientManager
+            // Delete a client via ClientManager
             int client_ID;
             std::cout << "Enter client ID to delete: ";
             std::cin >> client_ID;
@@ -48,21 +48,20 @@ void run_bank_app() {
             break;
         }
         case 3: {
-            // Показать всех клиентов через ClientManager
+            // Show all clients via ClientManager
             bank.get_client_manager()->show_all_clients();
             break;
         }
         case 4: {
-            // Создание счета для клиента через AccountManager
+            // Create an account for a client via AccountManager
             int client_ID;
             std::cout << "Enter client ID to create an account: ";
             std::cin >> client_ID;
             bank.get_client_manager()->find_client_by_ID(client_ID)->create_account();
-            //bank.get_account_manager()->add_account(client_ID);
             break;
         }
         case 5: {
-            // Удаление счета через AccountManager
+            // Delete an account via AccountManager
             int account_ID;
             std::cout << "Enter account ID to delete: ";
             std::cin >> account_ID;
@@ -70,12 +69,12 @@ void run_bank_app() {
             break;
         }
         case 6: {
-            // Показать все счета через AccountManager
+            // Show all accounts via AccountManager
             bank.get_account_manager()->show_all_accounts();
             break;
         }
         case 7: {
-            // Пополнение счета через TransactionManager
+            // Deposit money into an account via TransactionManager
             int account_ID;
             double amount;
             std::cout << "Enter account ID to deposit: ";
@@ -86,7 +85,7 @@ void run_bank_app() {
             break;
         }
         case 8: {
-            // Снятие средств со счета через TransactionManager
+            // Withdraw money from an account via TransactionManager
             int account_ID;
             double amount;
             std::cout << "Enter account ID to withdraw: ";
@@ -97,7 +96,7 @@ void run_bank_app() {
             break;
         }
         case 9: {
-            // Выполнение транзакции через TransactionManager
+            // Execute a transaction via TransactionManager
             int sender_ID, receiver_ID;
             double amount;
             std::cout << "Enter sender's account ID: ";
@@ -110,7 +109,7 @@ void run_bank_app() {
             break;
         }
         case 10: {
-            // Показать все транзакции через TransactionManager
+            // Show all transactions via TransactionManager
             bank.get_transaction_manager()->show_all_transactions();
             break;
         }
@@ -125,7 +124,7 @@ void run_bank_app() {
 }
 
 int main() {
-    //run_bank_app();
+    // run_bank_app();
     test_client_all();
     test_transaction_manager_all();
     test_client_manager_all();

@@ -4,20 +4,20 @@
 #include <list>
 #include "Transaction.h"
 #include "AccountManager.h"
-#include "ITransactionManager.h"  // Подключаем интерфейс
+#include "ITransactionManager.h"  // Include the ITransactionManager interface
 
 class TransactionManager : public ITransactionManager {
 private:
-    std::list<Transaction*> transactions_list_;   // Список транзакций
-    int next_transaction_ID_;                     // Следующий ID для транзакции
-    AccountManager* account_manager_;             // Указатель на AccountManager
+    std::list<Transaction*> transactions_list_;   // List of transactions
+    int next_transaction_ID_;                     // Next available transaction ID
+    AccountManager* account_manager_;             // Pointer to AccountManager
 
 public:
     TransactionManager(int next_transaction_ID, AccountManager* manager);
 
-    ~TransactionManager();  // Деструктор для освобождения памяти
+    ~TransactionManager();  // Destructor to free allocated memory
 
-    // Реализация методов интерфейса ITransactionManager
+    // Implementation of ITransactionManager interface methods
     std::list<Transaction*>& get_transactions_list() override;
     int get_next_transaction_ID() const override;
     void execute_transaction(int sender_ID, int receiver_ID, double amount) override;
