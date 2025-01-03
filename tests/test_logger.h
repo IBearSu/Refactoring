@@ -3,14 +3,13 @@
 
 #include <string>
 
-enum LogType
-{
-	info = 0,
-	success,
-	error
+enum LogType {
+    info = 0,
+    success,
+    error
 };
 
 void logger(LogType type, std::string msg);
 void log_assertion(bool condition, std::string test_name);
 
-#endif
+#endif // TEST_LOGGER_H

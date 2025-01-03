@@ -2,7 +2,7 @@
 #include "test_logger.h"
 #include "test_account_manager.h"
 
-// Тесты для AccountManager
+// Tests for AccountManager
 
 void test_account_manager_all() {
     logger(info, "Starting tests for AccountManager class");
@@ -21,10 +21,10 @@ void test_account_manager_all() {
 void test_AM_add_account() {
     AccountManager account_manager;
 
-    // Добавляем новый аккаунт
+    // Add a new account
     account_manager.add_account(1);
 
-    // Проверяем, что аккаунт был добавлен и что следующий ID аккаунта был увеличен
+    // Verify that the account was added and that the next account ID was incremented
     log_assertion(account_manager.get_accounts_list()->size() == 1, "Test Add Account - Size");
     log_assertion(account_manager.get_next_account_ID() == 2, "Test Add Account - Next Account ID");
 
@@ -36,14 +36,14 @@ void test_AM_add_account() {
 void test_AM_delete_account() {
     AccountManager account_manager;
 
-    // Добавляем два аккаунта
+    // Add two accounts
     account_manager.add_account(1);
     account_manager.add_account(2);
 
-    // Удаляем первый аккаунт
+    // Delete the first account
     account_manager.delete_account(1);
 
-    // Проверяем, что аккаунт был удален
+    // Verify that the account was deleted
     log_assertion(account_manager.get_accounts_list()->size() == 1, "Test Delete Account - Size");
     log_assertion(account_manager.find_account_by_ID(1) == nullptr, "Test Delete Account - Account Deleted");
 }
@@ -51,11 +51,11 @@ void test_AM_delete_account() {
 void test_find_account_by_ID() {
     AccountManager account_manager;
 
-    // Добавляем два аккаунта
+    // Add two accounts
     account_manager.add_account(1);
     account_manager.add_account(2);
 
-    // Проверяем, что аккаунты можно найти по ID
+    // Verify that accounts can be found by ID
     Account* account1 = account_manager.find_account_by_ID(1);
     Account* account2 = account_manager.find_account_by_ID(2);
 
@@ -66,21 +66,21 @@ void test_find_account_by_ID() {
 void test_deposit() {
     AccountManager account_manager;
 
-    // Добавляем аккаунт и устанавливаем баланс
+    // Add an account and set balance
     account_manager.add_account(1);
     account_manager.deposit(1, 100.0);
 
     Account* account = account_manager.find_account_by_ID(1);
     double balance = account->get_account_balance();
 
-    // Проверяем, что баланс был увеличен
+    // Verify that the balance was increased
     log_assertion(balance == 100.0, "Test Deposit - Balance");
 }
 
 void test_withdraw() {
     AccountManager account_manager;
 
-    // Добавляем аккаунт, пополняем его и затем снимаем деньги
+    // Add an account, deposit money, and then withdraw
     account_manager.add_account(1);
     account_manager.deposit(1, 100.0);
     account_manager.withdraw(1, 50.0);
@@ -88,14 +88,14 @@ void test_withdraw() {
     Account* account = account_manager.find_account_by_ID(1);
     double balance = account->get_account_balance();
 
-    // Проверяем, что баланс был уменьшен
+    // Verify that the balance was decreased
     log_assertion(balance == 50.0, "Test Withdraw - Balance");
 }
 
 void test_show_account_details() {
     AccountManager account_manager;
 
-    // Добавляем аккаунт и выводим его информацию
+    // Add an account and display its details
     account_manager.add_account(1);
     logger(info, "Testing show_account_details for account with ID 1:");
     account_manager.show_account_details(1);
@@ -104,11 +104,10 @@ void test_show_account_details() {
 void test_show_all_accounts() {
     AccountManager account_manager;
 
-    // Добавляем несколько аккаунтов и выводим информацию о всех
+    // Add multiple accounts and display all accounts
     account_manager.add_account(1);
     account_manager.add_account(2);
 
     logger(info, "Testing show_all_accounts:");
     account_manager.show_all_accounts();
 }
-

@@ -1,7 +1,7 @@
 #ifndef TESTS_CLIENT_MANAGER_H
 #define TESTS_CLIENT_MANAGER_H
 
-// Объявления функций для тестов класса ClientManager
+// Function declarations for testing the ClientManager class
 void test_client_manager_all();
 void test_add_client();
 void test_delete_client();

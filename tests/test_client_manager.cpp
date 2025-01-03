@@ -3,8 +3,7 @@
 #include "test_client_manager.h"
 #include "test_logger.h"
 
-// Тесты для ClientManager
-
+// Tests for ClientManager
 
 void test_client_manager_all() {
     logger(info, "Starting tests for ClientManager class");
@@ -20,12 +19,12 @@ void test_client_manager_all() {
 
 void test_add_client() {
     AccountManager account_manager;
-    ClientManager client_manager(1);  // Начальный ID клиента равен 1
+    ClientManager client_manager(1);  // Initial client ID is set to 1
 
-    // Добавляем клиента
+    // Add a client
     client_manager.add_client("John Doe", &account_manager);
 
-    // Проверяем, что клиент был добавлен и что следующий ID клиента был увеличен
+    // Verify that the client was added and that the next client ID was incremented
     log_assertion(client_manager.get_clients_list().size() == 1, "Test Add Client - Size");
     log_assertion(client_manager.get_next_client_ID() == 2, "Test Add Client - Next Client ID");
 
@@ -38,13 +37,13 @@ void test_delete_client() {
     AccountManager account_manager;
     ClientManager client_manager(1);
 
-    // Добавляем клиента
+    // Add a client
     client_manager.add_client("Jane Doe", &account_manager);
 
-    // Удаляем клиента
+    // Delete the client
     client_manager.delete_client(1);
 
-    // Проверяем, что клиент был удален
+    // Verify that the client was deleted
     log_assertion(client_manager.get_clients_list().size() == 0, "Test Delete Client - Size");
     log_assertion(client_manager.find_client_by_ID(1) == nullptr, "Test Delete Client - Client Deleted");
 }
@@ -53,18 +52,18 @@ void test_find_client_by_ID() {
     AccountManager account_manager;
     ClientManager client_manager(1);
 
-    // Добавляем двух клиентов
+    // Add two clients
     client_manager.add_client("Alice", &account_manager);
     client_manager.add_client("Bob", &account_manager);
 
-    // Проверяем, что клиенты могут быть найдены по ID
+    // Verify that clients can be found by ID
     Client* client1 = client_manager.find_client_by_ID(1);
     Client* client2 = client_manager.find_client_by_ID(2);
 
     log_assertion(client1 != nullptr, "Test Find Client by ID 1");
     log_assertion(client2 != nullptr, "Test Find Client by ID 2");
 
-    // Проверяем имена клиентов
+    // Verify client names
     if (client1) {
         log_assertion(client1->get_client_name() == "Alice", "Test Find Client 1 Name");
     }
@@ -77,10 +76,10 @@ void test_show_client_info() {
     AccountManager account_manager;
     ClientManager client_manager(1);
 
-    // Добавляем клиента
+    // Add a client
     client_manager.add_client("Charlie", &account_manager);
 
-    // Проверяем вывод информации о клиенте
+    // Verify output of client information
     logger(info, "Testing show_client_info for client with ID 1:");
     client_manager.show_client_info(1);
 }
@@ -89,13 +88,11 @@ void test_show_all_clients() {
     AccountManager account_manager;
     ClientManager client_manager(1);
 
-    // Добавляем нескольких клиентов
+    // Add multiple clients
     client_manager.add_client("Charlie", &account_manager);
     client_manager.add_client("David", &account_manager);
 
-    // Проверяем вывод всех клиентов
+    // Verify output of all clients
     logger(info, "Testing show_all_clients:");
     client_manager.show_all_clients();
 }
-
-

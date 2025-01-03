@@ -4,8 +4,7 @@
 #include "test_logger.h"
 #include "test_transaction_manager.h"
 
-// Тесты для TransactionManager
-
+// Tests for TransactionManager
 
 void test_transaction_manager_all() {
     logger(info, "Starting tests for TransactionManager class");
@@ -22,16 +21,16 @@ void test_transaction_manager_all() {
 void test_execute_transaction_success() {
     AccountManager account_manager;
 
-    // Добавляем два аккаунта с балансами
+    // Add two accounts with balances
     account_manager.add_account(1);
     account_manager.add_account(2);
 
-    account_manager.find_account_by_ID(1)->set_account_balance(500.0);  // Устанавливаем баланс для аккаунта 1
-    account_manager.find_account_by_ID(2)->set_account_balance(300.0);  // Устанавливаем баланс для аккаунта 2
+    account_manager.find_account_by_ID(1)->set_account_balance(500.0);  // Set balance for account 1
+    account_manager.find_account_by_ID(2)->set_account_balance(300.0);  // Set balance for account 2
 
     TransactionManager transaction_manager(1, &account_manager);
 
-    transaction_manager.execute_transaction(1, 2, 200.0);  // Переводим 200 с аккаунта 1 на аккаунт 2
+    transaction_manager.execute_transaction(1, 2, 200.0);  // Transfer 200 from account 1 to account 2
 
     double balance_sender = account_manager.find_account_by_ID(1)->get_account_balance();
     double balance_receiver = account_manager.find_account_by_ID(2)->get_account_balance();
@@ -43,16 +42,16 @@ void test_execute_transaction_success() {
 void test_execute_transaction_insufficient_funds() {
     AccountManager account_manager;
 
-    // Добавляем два аккаунта с балансами
+    // Add two accounts with balances
     account_manager.add_account(1);
     account_manager.add_account(2);
 
-    account_manager.find_account_by_ID(1)->set_account_balance(100.0);  // Устанавливаем баланс для аккаунта 1
-    account_manager.find_account_by_ID(2)->set_account_balance(300.0);  // Устанавливаем баланс для аккаунта 2
+    account_manager.find_account_by_ID(1)->set_account_balance(100.0);  // Set balance for account 1
+    account_manager.find_account_by_ID(2)->set_account_balance(300.0);  // Set balance for account 2
 
     TransactionManager transaction_manager(1, &account_manager);
 
-    transaction_manager.execute_transaction(1, 2, 200.0);  // Пытаемся перевести 200 с аккаунта 1 на аккаунт 2 (недостаточно средств)
+    transaction_manager.execute_transaction(1, 2, 200.0);  // Try to transfer 200 from account 1 to account 2 (insufficient funds)
 
     double balance_sender = account_manager.find_account_by_ID(1)->get_account_balance();
     double balance_receiver = account_manager.find_account_by_ID(2)->get_account_balance();
@@ -68,21 +67,21 @@ void test_find_transaction_by_ID() {
     account_manager.add_account(1);
     account_manager.add_account(2);
 
-    account_manager.find_account_by_ID(1)->set_account_balance(100.0);  // Устанавливаем баланс для аккаунта 1
-    account_manager.find_account_by_ID(2)->set_account_balance(300.0);  // Устанавливаем баланс для аккаунта 2
+    account_manager.find_account_by_ID(1)->set_account_balance(100.0);  // Set balance for account 1
+    account_manager.find_account_by_ID(2)->set_account_balance(300.0);  // Set balance for account 2
 
-    // Добавляем две транзакции
+    // Add two transactions
     transaction_manager.execute_transaction(1, 2, 50.0);
     transaction_manager.execute_transaction(3, 4, 100.0);
 
-    // Проверяем, что транзакции можно найти по их ID
+    // Verify that transactions can be found by their IDs
     Transaction* transaction1 = transaction_manager.find_transaction_by_ID(1);
     Transaction* transaction2 = transaction_manager.find_transaction_by_ID(2);
 
     log_assertion(transaction1 != nullptr, "Test Find Transaction by ID 1");
     log_assertion(transaction2 == nullptr, "Test Find Transaction by ID 2");
 
-    // Проверяем, что ID и суммы совпадают
+    // Verify that ID and amounts match
     if (transaction1) {
         log_assertion(transaction1->get_amount() == 50.0, "Test Transaction 1 Amount");
     }
@@ -92,10 +91,10 @@ void test_show_transaction_info() {
     AccountManager account_manager;
     TransactionManager transaction_manager(1, &account_manager);
 
-    // Добавляем транзакцию
+    // Add a transaction
     transaction_manager.execute_transaction(1, 2, 50.0);
 
-    // Проверяем вывод информации о транзакции
+    // Verify transaction information output
     logger(info, "Testing show_transaction_info for transaction with ID 1:");
     transaction_manager.show_transaction_info(1);
 }
@@ -106,15 +105,14 @@ void test_show_all_transactions() {
     account_manager.add_account(1);
     account_manager.add_account(2);
 
-    account_manager.find_account_by_ID(1)->set_account_balance(100.0);  // Устанавливаем баланс для аккаунта 1
-    account_manager.find_account_by_ID(2)->set_account_balance(300.0);  // Устанавливаем баланс для аккаунта 2
-    // Добавляем несколько транзакций
+    account_manager.find_account_by_ID(1)->set_account_balance(100.0);  // Set balance for account 1
+    account_manager.find_account_by_ID(2)->set_account_balance(300.0);  // Set balance for account 2
+
+    // Add multiple transactions
     transaction_manager.execute_transaction(1, 2, 50.0);
     transaction_manager.execute_transaction(2, 1, 100.0);
 
-    // Проверяем вывод всех транзакций
+    // Verify all transactions output
     logger(info, "Testing show_all_transactions:");
     transaction_manager.show_all_transactions();
 }
-
-

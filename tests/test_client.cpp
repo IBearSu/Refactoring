@@ -32,9 +32,9 @@ void test_delete_account() {
 
     client.create_account();
 
-    // Проверяем, что список аккаунтов не пуст
+    // Ensure the account list is not empty
     if (!client.get_client_account_IDs().empty()) {
-        int account_ID = *client.get_client_account_IDs().begin();  // Получаем ID первого аккаунта
+        int account_ID = *client.get_client_account_IDs().begin();  // Get the first account ID
 
         size_t initial_size = account_manager.get_accounts_list()->size();
         client.delete_account(account_ID);
@@ -97,4 +97,3 @@ void test_send_money_to_another_client() {
     log_assertion(client1_balance == 300.0, "Test Send Money To Another Client (Sender)");
     log_assertion(client2_balance == 300.0, "Test Send Money To Another Client (Receiver)");
 }
-
