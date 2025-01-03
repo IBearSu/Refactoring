@@ -6,6 +6,9 @@
 ## UML-diagram of project
 ![UML-diagram](diagram.png)
 
+## imit_bank_sys.cpp
+imit_bank_sys.cpp is an example how you should not write code. It was written in procedural paradigm when I just started my programming journey.
+
 ## Features
 - **Client Management**: Register, delete, and view clients.
 - **Account Management**: Create, delete, and view account details.
